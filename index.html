@@ -27,10 +27,10 @@
               <div class="form-header">Sign In with your Credentials</div>
               <form class="col s12 form1" method="post" action="/api/sign-in" name="form1" id="form1">
                 <div class="input-field col s12">
-                  <input autofocus="true" name="username" class="input-box" type="text" id="input-id-1" required placeholder="Username" pattern="[A-Za-z]{3,12}" title="Min 3 chars. Max 12 Chars.">
+                  <input autofocus="true" name="username" class="input-box" type="text" id="input-id-1" required placeholder="Username" pattern="[A-Za-z]{3,12}" title="Only alphabets: Min 3, Max 12">
                 </div>
                 <div class="input-field col s12">
-                  <input class="input-box" name="password" type="Password" id="input-id-2" placeholder="Password">
+                  <input class="input-box" name="password" type="Password" id="input-id-2" placeholder="Password" pattern="[A-Za-z1-9]{3,12}" title="Only letters and numbers: Min 3, Max 12" required>
                 </div>
                 <div class="input-field col s12 input-radio
                 ">

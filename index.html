@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Parking Indicator</title>
+    <meta name="description" content="Parking Indicator" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="materialize.min.css"></link>
+    <link rel="stylesheet" href="style.css"></link>
+  </head>
+  <body>
+    <header id="header">
+      <div class="row">
+        <div class="page-header">
+          Parking Indicator
+        </div>
+      </div>
+    </header>
+    <main id="body">
+      <div class="description">
+        An application that monitors the parking space details
+      </div>
+      <div class="container">
+        <div class="main-section">
+          <div id="adminContent" class="admin-login input-container">
+            <div class="row input-form">
+              <div class="form-header">Sign In with your Credentials</div>
+              <form class="col s12 form1" method="post" action="/api/sign-in" name="form1" id="form1">
+                <div class="input-field col s12">
+                  <input autofocus="true" name="username" class="input-box" type="text" id="input-id-1" required placeholder="Username" pattern="[A-Za-z]{3,12}" title="Min 3 chars. Max 12 Chars.">
+                </div>
+                <div class="input-field col s12">
+                  <input class="input-box" name="password" type="Password" id="input-id-2" placeholder="Password">
+                </div>
+                <div class="input-field col s12 input-radio
+                ">
+                  <span class="type-radio">
+                    <input name="signInType" type="radio" id="admin" value="admin" checked="true" />
+                    <label for="admin">Admin</label>
+                  </span>
+                  <span class="type-radio">
+                    <input name="signInType" type="radio" id="user" value="user"/>
+                    <label for="user">User</label>
+                  </span>
+                </div>
+                <div class="signin-btn col s12 ">
+                  <button type="submit" id="signin_btn" class="waves-effect waves-light btn">Sign In</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="jquery-2.1.1.min.js"></script>
+    <script src="main.js"> </script>
+  </body>
+</html>

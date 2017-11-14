@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Parking Monitor</title>
+    <meta name="description" content="Parking Monitor" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="materialize.min.css"></link>
+    <link rel="stylesheet" href="style.css"></link>
+  </head>
+  <body>
+    <header id="header">
+      <div class="row">
+        <div class="page-header">
+          Parking Monitor
+        </div>
+      </div>
+    </header>
+    <div id="modalOverlay" class="modal-overlay hide">
+      <div class="modal-dialog">
+        <div class="modal-header">Parking Details</div>
+        <div id="parkingDetails" class="modal-content">
+        </div>
+       <div class="close-btn col s12">
+          <a id="close_btn" class="waves-effect waves-light btn">Close</a>
+        </div>
+      </div>
+    </div>
+    <main id="body">
+      <div class="description">
+        An application that monitors the parking space details
+      </div>
+      <div class="main-container">
+        <div class="main-section">
+          <div id="adminContent" class="input-container">
+            <div class="row input-form">
+              <div class="form-header">Parking slots status</div>
+              <div class="signout-btn">
+                <a href="/sign-out" id="signout_btn" class="waves-effect waves-light btn signout">Sign Out</a>
+              </div>
+              <div class="parking-slots" id="slotsContainer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="jquery-2.1.1.min.js"></script>
+    <script src="main1.js"> </script>
+  </body>
+</html>

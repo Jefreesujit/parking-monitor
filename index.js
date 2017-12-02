@@ -3,6 +3,13 @@ var app = express();
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http').Server(app);
+var firebase = require('firebase');
+var io = require('socket.io')(http);
+
+var firebaseApp = firebase.initializeApp({
+  authDomain: "sps1234-24931.firebaseio.com",
+  databaseURL: "https://sps1234-24931.firebaseio.com/"
+});
 
 // controllers
 
@@ -33,9 +40,19 @@ function loginController (req, res) {
 }
 
 function parkingController (req, res) {
-  var array = [];
-  for (var i = 1, flag = 0; i < 100; i++) { array.push(flag); flag = flag ? 0 : 1; }
-  res.json(array);
+  var forgeRef = firebase.database().ref('forge'),
+      dataArray = [];
+
+  forgeRef.on("value", function(snapshot) {
+    var dataList = snapshot.val();
+    for (key in dataList) {
+      let tempKey = parseInt(key.substring(4)) - 1;
+      console.log(tempKey);
+      dataArray[tempKey] = dataList[key];
+    }
+    console.log('dataArray', dataArray);
+    res.json(dataArray);
+  });
 }
 
 function parkingDetails (req, res) {

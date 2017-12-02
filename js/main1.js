@@ -3,9 +3,11 @@ function populateValues () {
   var valuesArray = [];
   $.get( "api/get-parking-status", ( data ) => {
     data.map((datum, index) => {
-      let status = datum ? 'filled' : 'empty';
+      let status = datum ? 'filled' : 'empty',
+          slotInfo = (typeof datum === 'string') ? datum.replace(/\"/g, '') : datum;
+
       valuesArray.push(
-        '<div class="slot ' + status + '" data-slotid=' + (index + 1) + '>' + (index + 1) + '</div>'
+        '<div class="slot ' + status + '" data-slotinfo='+ slotInfo +' data-slotid=' + (index + 1) + '>' + (index + 1) + '</div>'
       );
     });
 
@@ -18,7 +20,6 @@ $('#close_btn').on('click', function(event) {
   $('#modalOverlay').addClass('hide');
 });
 
-
 function showDetailsModal (data) {
   let detailsContent = [];
   for (let key in data) {
@@ -29,9 +30,11 @@ function showDetailsModal (data) {
 } 
 
 $(document).on('click', '.slot.filled', function () {
-  let id = $(this).data('slotid');
-  $.get( "api/get-parking-details/"+id, ( data ) => {
-    showDetailsModal(data);
+  let slotInfo = $(this).data('slotinfo').split(',');
+  showDetailsModal({
+    'Slot No': slotInfo[0],
+    'Parked Date': slotInfo[1],
+    'Parked Time': slotInfo[2]
   });
 });
 

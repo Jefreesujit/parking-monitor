@@ -1,17 +1,21 @@
+var socket = io();
 
-function populateValues () {
+function populateValues (data) {
   var valuesArray = [];
+
+  data.map((datum, index) => {
+    let status = datum ? 'filled' : 'empty',
+        slotInfo = (typeof datum === 'string') ? datum.replace(/\"/g, '') : datum;
+
+    valuesArray.push('<div class="slot ' + status + '" data-slotinfo='+ slotInfo +' data-slotid=' + (index + 1) + '>' + (index + 1) + '</div>');
+  });
+
+  $('#slotsContainer').html(valuesArray);
+}
+
+function getValues () {
   $.get( "api/get-parking-status", ( data ) => {
-    data.map((datum, index) => {
-      let status = datum ? 'filled' : 'empty',
-          slotInfo = (typeof datum === 'string') ? datum.replace(/\"/g, '') : datum;
-
-      valuesArray.push(
-        '<div class="slot ' + status + '" data-slotinfo='+ slotInfo +' data-slotid=' + (index + 1) + '>' + (index + 1) + '</div>'
-      );
-    });
-
-    $('#slotsContainer').html(valuesArray);
+    populateValues(data);
   });
 }
 
@@ -30,16 +34,24 @@ function showDetailsModal (data) {
 } 
 
 $(document).on('click', '.slot.filled', function () {
-  let slotInfo = $(this).data('slotinfo').split(',');
-  showDetailsModal({
-    'Slot No': slotInfo[0],
-    'Parked Date': slotInfo[1],
-    'Parked Time': slotInfo[2]
-  });
+  if (typeof $(this).data('slotinfo') === 'string') {
+    let slotInfo = $(this).data('slotinfo').split(',')
+        slotId = $(this).data('slotid');
+
+    showDetailsModal({
+      'Slot No': slotId,
+      'Parked Date': slotInfo[1],
+      'Parked Time': slotInfo[2]
+    });
+  }
+});
+
+socket.on('parkingdata' , function(parkingData){ 
+  populateValues(parkingData);
 });
 
 /* start */
 
 $(document).ready(() => {
-  populateValues();
+  socket.emit('getdata', Cookies.get('role'));
 });

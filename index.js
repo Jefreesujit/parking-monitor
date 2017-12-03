@@ -59,7 +59,7 @@ function parkingDetails (req, res) {
   if (req.cookies.role === 'admin') {
     console.log(req.params.slotId);
     res.json({
-      Username: 'Venkat',
+      Username: 'Thiyanes',
       VehicleNo: 'TN 08 AC 4376',
       ParkedDate: '9th Nov 2017',
       ParkedTime: '11:45 AM'
@@ -109,6 +109,24 @@ app.get('/', function(req,res) {
   } else {
     res.sendFile(__dirname + '/index.html');
   }
+});
+
+// socket to get realtime data
+
+io.on('connection' , function(socket) {
+  socket.on('getdata', function(role) {
+    var forgeRef = firebase.database().ref('forge'),
+    dataArray = [];
+
+    forgeRef.on("value", function(snapshot) {
+      var dataList = snapshot.val();
+      for (key in dataList) {
+        let tempKey = parseInt(key.substring(4)) - 1;
+        dataArray[tempKey] = role === 'admin' ? dataList[key] : dataList[key] ? 1 : 0;
+      }
+      socket.emit('parkingdata', dataArray);
+    });
+  });
 });
 
 http.listen(process.env.PORT || 3000, function(){
